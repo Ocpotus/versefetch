@@ -43,8 +43,8 @@ int main(void) {
 
 	fetch(&verse, CROSS);
 
-	//if(SPECTRUM_ON)
-		//display_spectrum(COLOR_CHAR);
+	if(SPECTRUM_ON)
+		display_spectrum(COLOR_CHAR);
 	
 	free(DATA);
 
