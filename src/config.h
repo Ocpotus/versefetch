@@ -5,7 +5,7 @@
 	#define DETAIL							BCYAN
 
 	// Absolute path to input file, a copy of the Douay Rheims translation is provided in assets
-	#define BIBLE_PATH					"//home/owen/Dev/Terminal_Programs/versefetch/assets/bible.txt"
+	#define BIBLE_PATH					""
 
 	// Indices for limiting the range of verses, and New Testament index
 	#define MIN									195
