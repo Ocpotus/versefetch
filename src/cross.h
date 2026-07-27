@@ -19,7 +19,7 @@
 			"      |__|      ",
 		}
 	};
-	struct Cross Orthodox = {
+	struct Cross Eastern = {
 		.lines = {
 			"     _====_     ",
 			"    [_    _]    ",
