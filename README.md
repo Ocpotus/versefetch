@@ -1,7 +1,7 @@
 # versefetch
 Bible in the terminal!
-![John](assets/versefetchJohn.png)
-![Psalms](assets/versefetchPsalms.png)
+![Versefetch 1](versefetch_1.png)
+![Versefetch 2](versefetch_2.png)
 
 ## Usage
 ```

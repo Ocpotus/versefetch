@@ -8,3 +8,8 @@
 !.forge/
 !.forge/Makefile
 !config.toml
+
+!tools/
+!tools/**
+
+!*.png
