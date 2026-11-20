@@ -1,0 +1,10 @@
+# Git
+*
+!.gitignore
+
+# Forge
+!src/
+!src/**
+!.forge/
+!.forge/Makefile
+!config.toml

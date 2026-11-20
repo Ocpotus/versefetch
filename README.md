@@ -4,14 +4,21 @@ Bible in the terminal!
 ![Psalms](assets/versefetchPsalms.png)
 
 ## Usage
-### Configuration
-All configuration is done via `src/config.h`.
+```
+$ versefetch                  # random verse
+$ versefetch psalms           # random verse from a book
+$ versefetch 1 kings 3        # random verse from a chapter
+$ versefetch john 3:16        # a specific verse
+```
+For more help:
+```
+$ versefetch --help
+```
+Book names follow the Douay-Rheims (e.g. `Apocalypse`, `Isaias`, `1 Kings`) and are case-insensitive.
+
 ### Building
-Simply run the following (root privileges are needed for installation):
+Simply run the following:
 ```
-$ make clean install
-```
-### Running
-```
-$ versefetch
+$ chmod u+x install.sh
+$ install.sh
 ```
