@@ -4,6 +4,7 @@
 
 #include "versefetch.h"
 
+
 // Accepts "3" or "3:16"
 static int parse_ref(const char *s, unsigned *chapter, unsigned *verse) {
 	char *end;

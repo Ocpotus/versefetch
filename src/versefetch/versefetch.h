@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdio.h>
 
-#include "cross.h"
+#include "cross/cross.h"
 
 // One verse, parsed from a line of the TSV file:
 //   testament <TAB> book <TAB> chapter <TAB> verse <TAB> text
@@ -27,8 +27,9 @@ typedef struct Query {
 // How the verse is drawn. Defaults come from config.h.
 typedef struct Style {
 	const Cross *cross;
-	const char *detail;			// Color escape for the cross and labels
-	int spectrum;				// Print the terminal color spectrum afterwards
+	const char *detail;
+	int spectrum;
+	const char *spectrum_char;
 } Style;
 
 // query.c
@@ -43,13 +44,5 @@ int versefetch_pick_verse(FILE *file, const Query *q, Verse *out);
 // display.c
 void versefetch_display(const Verse *verse, const Style *style);
 void versefetch_display_spectrum(const char *icon);
-
-// Name lookups for command line options; NULL if unknown
-const Cross *versefetch_cross_by_name(const char *name);
-const char *versefetch_color_by_name(const char *name);
-
-// Prints the names accepted by the lookups above, comma separated
-void versefetch_list_crosses(FILE *stream);
-void versefetch_list_colors(FILE *stream);
 
 #endif

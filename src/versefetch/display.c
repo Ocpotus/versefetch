@@ -2,73 +2,19 @@
 #include <string.h>
 #include <strings.h>
 
+#include "cross/cross.h"
+
 #include "versefetch.h"
-#include "config.h"
-#include "color.h"
+#include "color/color.h"
 
 
-static const struct {
-	const char *name;
-	const Cross *cross;
-} crosses[] = {
-	{ "latin",     &Latin },
-	{ "eastern",   &Eastern },
-	{ "greek",     &Greek },
-	{ "celtic",    &Celtic },
-	{ "patriarch", &Patriarch },
-	{ "jerusalem", &Jerusalem },
-};
-
-static const struct {
-	const char *name;
-	const char *code;
-} colors[] = {
-	{ "black",   RBLACK },   { "red",     RRED },
-	{ "green",   RGREEN },   { "yellow",  RYELLOW },
-	{ "blue",    RBLUE },    { "magenta", RMAGENTA },
-	{ "cyan",    RCYAN },    { "white",   RWHITE },
-	{ "bblack",  BBLACK },   { "bred",    BRED },
-	{ "bgreen",  BGREEN },   { "byellow", BYELLOW },
-	{ "bblue",   BBLUE },    { "bmagenta", BMAGENTA },
-	{ "bcyan",   BCYAN },    { "bwhite",  BWHITE },
-};
-
-#define COUNT(a) (sizeof(a) / sizeof((a)[0]))
-
-const Cross *versefetch_cross_by_name(const char *name) {
-	for(size_t i = 0; i < COUNT(crosses); i += 1) {
-		if(strcasecmp(name, crosses[i].name) == 0)
-			return crosses[i].cross;
-	}
-
-	return NULL;
-}
-
-const char *versefetch_color_by_name(const char *name) {
-	for(size_t i = 0; i < COUNT(colors); i += 1) {
-		if(strcasecmp(name, colors[i].name) == 0)
-			return colors[i].code;
-	}
-
-	return NULL;
-}
-
-void versefetch_list_crosses(FILE *stream) {
-	for(size_t i = 0; i < COUNT(crosses); i += 1)
-		fprintf(stream, "%s%s", i ? ", " : "", crosses[i].name);
-	fprintf(stream, "\n");
-}
-
-void versefetch_list_colors(FILE *stream) {
-	for(size_t i = 0; i < COUNT(colors); i += 1)
-		fprintf(stream, "%s%s", i ? ", " : "", colors[i].name);
-	fprintf(stream, "\n");
-}
+// Maximum width of a line of verse text before it wraps
+#define WRAP_WIDTH	64
 
 // Prints the cross row (or blank space once the cross runs out) and a tab
-static void cross_row(const Style *style, unsigned row) {
+static void cross_row(const Style *style, unsigned int row) {
 	if(row < CROSS_ROWS) {
-		printf("%s%s%s\t", style->detail, style->cross->lines[row], RESET);
+		printf("%s%s%s\t", style->detail, (*style->cross)[row], RESET);
 	} else {
 		printf("%*s\t", CROSS_WIDTH, "");
 	}
@@ -90,9 +36,11 @@ void versefetch_display(const Verse *verse, const Style *style) {
 	const char *text = verse->text;
 	unsigned int row = 0;
 
-	cross_row(style, row++);
+	cross_row(style, row);
+	row += 1;
 	printf("\n");
-	cross_row(style, row++);
+	cross_row(style, row);
+	row += 1;
 	printf("%sTestament:%s %s\n", style->detail, RESET,
 		strcmp(verse->testament, "NT") == 0 ? "New Testament" : "Old Testament");
 	cross_row(style, row++);
@@ -125,7 +73,7 @@ void versefetch_display(const Verse *verse, const Style *style) {
 
 	// Finish drawing the cross under short verses
 	while(row < CROSS_ROWS) {
-		printf("%s%s%s\n", style->detail, style->cross->lines[row++], RESET);
+		printf("%s%s%s\n", style->detail, (*style->cross)[row++], RESET);
 	}
 
 	printf("\n");
